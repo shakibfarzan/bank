@@ -27,12 +27,17 @@ class Bank2
 
 	public Account findAccount(int id) // find the account for the given id. Returns null if not found
     {
-        
+        return accounts.get(id);
     }
 	
 	public boolean addAccount(Account account)
     {
-        
+        if (accounts.get(account.getID())!=null){
+            return false;
+        }else{
+            accounts.put(account.getID(), account);
+            return true;
+        }
     }
 
     public void printAccounts()
@@ -46,12 +51,32 @@ class Bank2
     
     public HashMap<String,Double> getTotalBalancePerCity()
     {
-        
+        HashMap<String, Double> totalBalances = new HashMap<>();
+        for (Account acc: accounts.values()){
+            String city = acc.getCity();
+            Double val = totalBalances.get(city);
+            if(val == null){
+                totalBalances.put(city, acc.getBalance());
+            }else{
+                totalBalances.put(city, val + acc.getBalance());
+            }
+        }
+        return totalBalances;
     }
 	
     public HashMap<String,Integer> getTotalCountPerCity()       
     {
-	
+        HashMap<String, Integer> totalCounts = new HashMap<>();
+        for (Account acc: accounts.values()){
+            String city = acc.getCity();
+            Integer val = totalCounts.get(city);
+            if(val == null){
+                totalCounts.put(city, 1);
+            }else{
+                totalCounts.put(city, ++val);
+            }
+        }
+        return totalCounts;
     }
     
     public void  reportCity(HashMap<String,Double> balances,HashMap<String,Integer> counts)
@@ -66,7 +91,11 @@ class Bank2
 	
     public HashMap<Integer,Integer> getTotalCountPerRange( ArrayList<Integer> ranges)
     {
-        
+        HashMap<Integer, Integer> totalCountsPerRange = new HashMap<>();
+        for (Account acc: accounts.values()){
+            Double balance = acc.getBalance();
+
+        }
     }
     public void reportRanges( ArrayList<Integer> ranges,HashMap<Integer,Integer> countsPerRange)
     {
