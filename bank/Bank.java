@@ -118,7 +118,7 @@ public class Bank
     public ArrayList<Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
     {
         ArrayList<Integer> counts = new ArrayList<>();
-        for (int i = 0; i < ranges.size(); i+=1) {
+        for (int i = 0; i < ranges.size()-1; i+=1) {
             int counter = 0;
             for (Account acc: accounts){
                 if(acc.getBalance() >= ranges.get(i) && acc.getBalance() < ranges.get(i+1)){
