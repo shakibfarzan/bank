@@ -13,7 +13,7 @@ public class Program
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
         Account acc4 = new Account (4,"Robert", 8000,"Tehran");
-	Bank bank=new Bank("Hooman Bank");
+	    Bank bank=new Bank("Hooman Bank");
         
         //adding accounts
         bank.addAccount(acc1);
@@ -108,8 +108,8 @@ public class Program
         HashMap<String,Integer> counts2=bank2.getTotalCountPerCity();
         bank2.reportCity(cities2,counts2);
 		
-        //HashMap<Integer,Integer> countsPerRange1=bank2.getTotalCountPerRange(ranges);
-        //bank2.reportRanges(ranges,countsPerRange1);
+        HashMap<Integer,Integer> countsPerRange1=bank2.getTotalCountPerRange(ranges);
+        bank2.reportRanges(ranges,countsPerRange1);
      
     }
 	

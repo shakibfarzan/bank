@@ -115,7 +115,8 @@ class Bank2
         for (int i=0;i<ranges.size()-1;i++)
         {
             Integer max = ranges.get(i+1);
-            System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+countsPerRange.get(max) );
+            Integer count = countsPerRange.get(max);
+            System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
         }
         System.out.println();
 
