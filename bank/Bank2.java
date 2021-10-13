@@ -94,7 +94,7 @@ class Bank2
         HashMap<Integer, Integer> totalCountsPerRange = new HashMap<>();
         for (Account acc: accounts.values()){
             double balance = acc.getBalance();
-            for (int i = 0; i < ranges.size()-1; i+=1) {
+            for (int i = 0; i < ranges.size()-1; i++) {
                 Integer min = ranges.get(i);
                 Integer max = ranges.get(i+1);
                 if (balance >= min && balance < max){
