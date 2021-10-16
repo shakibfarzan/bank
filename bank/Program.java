@@ -1,5 +1,7 @@
 package bank;
 
+import searchStructures.MyHashMap;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,7 +10,7 @@ import java.util.Scanner;
 public class Program
 {   
     public static void main(String[] args) 
-    {  
+    {
         Account acc1 = new Account (1,"Kim",  100,"Sydney");
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
@@ -100,7 +102,7 @@ public class Program
         bank2.addAccount(acc4);
 		
         //find an account
-        Account accn=bank.findAccount(3);
+        Account accn=bank2.findAccount(3);
         withdraw(accn,10);
 
         //Data aggregation
@@ -110,7 +112,26 @@ public class Program
 		
         HashMap<Integer,Integer> countsPerRange1=bank2.getTotalCountPerRange(ranges);
         bank2.reportRanges(ranges,countsPerRange1);
-     
+
+        Bank3 bank3=new Bank3("bank with myHashmap");
+
+        //adding accounts
+        bank3.addAccount(acc1);
+        bank3.addAccount(acc2);
+        bank3.addAccount(acc3);
+        bank3.addAccount(acc4);
+
+        //find an account
+        Account accnt=bank3.findAccount(3);
+        withdraw(accnt,10);
+
+        //Data aggregation
+        MyHashMap<String,Double> cities3=bank3.getTotalBalancePerCity();
+        MyHashMap<String,Integer> counts3=bank3.getTotalCountPerCity();
+        bank3.reportCity(cities3,counts3);
+
+        MyHashMap<Integer,Integer> countsPerRange2=bank3.getTotalCountPerRange(ranges);
+        bank3.reportRanges(ranges,countsPerRange2);
     }
 	
     public static void withdraw(Account acc, double amount) //UI method
