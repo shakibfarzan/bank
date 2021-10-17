@@ -13,9 +13,9 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
 {
    public class Node
     {
-	    public Item<K, V> item;
-        public Node left;
-        public Node right;
+        private Item<K, V> item;
+        private Node left;
+        private Node right;
         
 	    public Node(K key,V data)
         {
@@ -23,6 +23,18 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
             left = null;
             right = null;
 	    }
+
+        public Item<K, V> getItem() {
+            return item;
+        }
+
+        public Node getLeft() {
+            return left;
+        }
+
+        public Node getRight() {
+            return right;
+        }
     }
     public Node root;
     public BinarySearchTree()
@@ -162,8 +174,25 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
     }
     public boolean insert(K key,V data)
     {
-        if(search(key)!=null)
-            return false;
+//        if(search(key)!=null)
+//            return false;
+        Node currentNode = root;
+        while(currentNode!=null)
+        {
+            if(currentNode.item.key.equals(key))
+            {
+                currentNode.item.data = data;
+                return true;
+            }
+            else if(Integer.valueOf(currentNode.item.key.hashCode()).compareTo(key.hashCode())>0)
+            {
+                currentNode = currentNode.left;
+            }
+            else
+            {
+                currentNode = currentNode.right;
+            }
+        }
         Node newNode = new Node(key,data);
         if(root==null)
         {

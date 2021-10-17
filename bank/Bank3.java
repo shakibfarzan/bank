@@ -42,7 +42,8 @@ class Bank3
     public MyHashMap<String,Double> getTotalBalancePerCity()
     {
         MyHashMap<String, Double> totalBalances = new MyHashMap<>(length);
-        for (Account acc: accounts.values()){
+        Collection<Account> accountsValues = accounts.values();
+        for (Account acc: accountsValues){
             String city = acc.getCity();
             Double val = totalBalances.search(city);
             if(val == null){
@@ -57,7 +58,8 @@ class Bank3
     public MyHashMap<String,Integer> getTotalCountPerCity()
     {
         MyHashMap<String, Integer> totalCounts = new MyHashMap<>(length);
-        for (Account acc: accounts.values()){
+        Collection<Account> accountsValues =  accounts.values();
+        for (Account acc: accountsValues){
             String city = acc.getCity();
             Integer val = totalCounts.search(city);
             if(val == null){
@@ -73,7 +75,8 @@ class Bank3
     {
         System.out.println();
         System.out.println("\n City \t \t Total Balance \t \t Average Balance");
-        for (String city: balances.keys())
+        Collection<String> balancesKeys = balances.keys();
+        for (String city: balancesKeys)
         {
             System.out.println(city+"\t \t "+balances.search(city)+" \t \t "+balances.search(city)/(double)counts.search(city));
         }
@@ -82,7 +85,8 @@ class Bank3
     public MyHashMap<Integer,Integer> getTotalCountPerRange( ArrayList<Integer> ranges)
     {
         MyHashMap<Integer, Integer> totalCountsPerRange = new MyHashMap<>(length);
-        for (Account acc: accounts.values()){
+        Collection<Account> accountsValues =  accounts.values();
+        for (Account acc: accountsValues){
             double balance = acc.getBalance();
             for (int i = 0; i < ranges.size()-1; i++) {
                 Integer min = ranges.get(i);

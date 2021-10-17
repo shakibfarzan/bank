@@ -1,5 +1,6 @@
 package bank;
 
+import searchStructures.BinarySearchTree;
 import searchStructures.MyHashMap;
 
 import java.util.ArrayList;
@@ -113,8 +114,7 @@ public class Program
         HashMap<Integer,Integer> countsPerRange1=bank2.getTotalCountPerRange(ranges);
         bank2.reportRanges(ranges,countsPerRange1);
 
-        Bank3 bank3=new Bank3("bank with myHashmap");
-
+        Bank3 bank3=new Bank3("bank with MyHashmap");
         //adding accounts
         bank3.addAccount(acc1);
         bank3.addAccount(acc2);
@@ -132,6 +132,27 @@ public class Program
 
         MyHashMap<Integer,Integer> countsPerRange2=bank3.getTotalCountPerRange(ranges);
         bank3.reportRanges(ranges,countsPerRange2);
+
+        Bank4 bank4 = new Bank4("bank with BST");
+
+        System.out.println("bank4");
+        //adding accounts
+        bank4.addAccount(acc1);
+        bank4.addAccount(acc2);
+        bank4.addAccount(acc3);
+        bank4.addAccount(acc4);
+
+        //find an account
+        Account accnt1=bank4.findAccount(3);
+        withdraw(accnt1,10);
+
+        //Data aggregation
+        BinarySearchTree<String,Double> cities4=bank4.getTotalBalancePerCity();
+        BinarySearchTree<String,Integer> counts4=bank4.getTotalCountPerCity();
+        bank4.reportCity(cities4,counts4);
+
+        BinarySearchTree<Integer,Integer> countsPerRange3=bank4.getTotalCountPerRange(ranges);
+        bank4.reportRanges(ranges,countsPerRange3);
     }
 	
     public static void withdraw(Account acc, double amount) //UI method
