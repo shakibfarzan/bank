@@ -1,8 +1,6 @@
 package searchStructures;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 public class MyHashMap<K, V> extends SearchStructure<K, V>{
     private MyLinkedList<K, V>[] hashtable;
@@ -47,30 +45,17 @@ public class MyHashMap<K, V> extends SearchStructure<K, V>{
         return (hashtable[index]==null)?null:hashtable[index].search(key);
     }
 
-    public Collection<V> values(){
-        Collection <V> values = new ArrayList<>();
+    public List<Item<K, V>> convertToList(){
+        List<Item<K, V>> list = new LinkedList<>();
         for (MyLinkedList<K, V> l : hashtable) {
             if (l == null) continue;
             MyLinkedList.Node pointer = l.head;
             while (pointer != null) {
-                values.add((V) pointer.item.data);
+                list.add(pointer.item);
                 pointer = pointer.next;
             }
         }
-        return values;
-    }
-
-    public Collection<K> keys(){
-        Collection<K> keys = new ArrayList<>();
-        for (MyLinkedList<K, V> l: hashtable){
-            if (l == null) continue;
-            MyLinkedList.Node pointer = l.head;
-            while (pointer != null) {
-                keys.add((K) pointer.item.key);
-                pointer = pointer.next;
-            }
-        }
-        return keys;
+        return list;
     }
 
     public void print() {
