@@ -4,7 +4,7 @@ package bank;
  *
  * @author hooman
  */
-class Account
+class Account implements Comparable<Account>
 {
     private int id;
     private String name;
@@ -78,5 +78,10 @@ class Account
     public String toString()
     {
             return "ID: "+id +" Name: " +name+ " Balance: " + balance+ " City: "+ city;
+    }
+
+    @Override
+    public int compareTo(Account o) {
+        return Integer.compare(this.id, o.id);
     }
 }
