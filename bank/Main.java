@@ -1,10 +1,13 @@
 package bank;
 
 import searchStructures.BinarySearchTree;
+import searchStructures.Item;
 import searchStructures.MyHashMap;
 import searchStructures.MyLinkedList;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,9 +22,15 @@ public class Main {
 //        BinarySearchTree<String, Integer> bst = new BinarySearchTree<>();
 //        bst.insert("a", 1);
 //        bst.insert("b", 2);
-//        System.out.println(bst.search("a"));
-//        bst.insert("a", 12);
-//        System.out.println(bst.search("a"));
-
+//        bst.insert("c", 3);
+//        bst.insert("d",4);
+//        bst.insert("e", 5);
+        Random rand = new Random();
+        String[] cities = {"Sari", "Shiraz", "Tehran", "Kerman", "Tabriz", "Zahedan", "Arak", "Yazd", "Isfahan", "Hamedan","Mashhad", "Abadan"};
+        String[] array = new String[10];
+        for (int i = 0; i < 10; i++) {
+            array[i] = cities[rand.nextInt(cities.length)];
+        }
+        System.out.println(Arrays.toString(array));
     }
 }

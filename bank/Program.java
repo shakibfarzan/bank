@@ -3,6 +3,7 @@ package bank;
 import searchStructures.BinarySearchTree;
 import searchStructures.MyHashMap;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 
 public class Program
 {   
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         Account acc1 = new Account (1,"Kim",  100,"Sydney");
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
@@ -84,8 +85,8 @@ public class Program
 
         //Data Aggregation Report: print total and average balance per city 
         ArrayList<String>cities=bank.populateDistinctCityList();
-        ArrayList<Double>balances=bank.getTotalBalancePerCity(cities);
-        ArrayList<Integer>counts=bank.getTotalCountPerCity(cities);
+        ArrayList<Double>balances=bank.getTotalBalancePerCity();
+        ArrayList<Integer>counts=bank.getTotalCountPerCity();
         bank.reportTotalPerCity(cities,counts,balances); 
 
         //Data Aggregation Report: print number of accounts per balance range
@@ -135,7 +136,6 @@ public class Program
 
         Bank4 bank4 = new Bank4("bank with BST");
 
-        System.out.println("bank4");
         //adding accounts
         bank4.addAccount(acc1);
         bank4.addAccount(acc2);
@@ -153,6 +153,13 @@ public class Program
 
         BinarySearchTree<Integer,Integer> countsPerRange3=bank4.getTotalCountPerRange(ranges);
         bank4.reportRanges(ranges,countsPerRange3);
+
+        Coordinator coordinator = new Coordinator();
+        try {
+            coordinator.experiment(1000, 50);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 	
     public static void withdraw(Account acc, double amount) //UI method
