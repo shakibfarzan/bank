@@ -5,11 +5,14 @@
  */
 package searchStructures;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Hooman
  */
-public class BinarySearchTree<K, V> extends SearchStructure<K, V>
+public class BinarySearchTree<K extends Comparable<K>, V> extends SearchStructure<K, V>
 {
    public class Node
     {
@@ -50,7 +53,7 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
             {
                 return current.item.data;
             }
-            else if(Integer.valueOf(current.item.key.hashCode()).compareTo(key.hashCode())>0)
+            else if(current.item.key.compareTo(key)>0)
             {
                 current = current.left;
             }
@@ -69,7 +72,7 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
         while(!current.item.key.equals(key))
         {
             parent = current;
-            if(Integer.valueOf(current.item.key.hashCode()).compareTo(key.hashCode())>0)
+            if(current.item.key.compareTo(key)>0)
             {
                 isLeftChild = true;
                 current = current.left;
@@ -184,7 +187,7 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
                 currentNode.item.data = data;
                 return true;
             }
-            else if(Integer.valueOf(currentNode.item.key.hashCode()).compareTo(key.hashCode())>0)
+            else if(currentNode.item.key.compareTo(key)>0)
             {
                 currentNode = currentNode.left;
             }
@@ -204,7 +207,7 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
         while(true)
         {
             parent = current;
-            if(Integer.valueOf(current.item.key.hashCode()).compareTo(key.hashCode())>0)
+            if(current.item.key.compareTo(key)>0)
             {				
                 current=current.left;
                 if(current==null)
@@ -224,6 +227,21 @@ public class BinarySearchTree<K, V> extends SearchStructure<K, V>
             }    
 	}
     }
+
+    public List<Item<K, V>> convertToList(){
+        List<Item<K,V>> list = new LinkedList<>();
+        convertToList(root, list);
+        return list;
+    }
+
+    private void convertToList(Node root, List<Item<K, V>> result){
+        if(root != null){
+            convertToList(root.left, result);
+            result.add(root.item);
+            convertToList(root.right, result);
+        }
+    }
+
     public void display(Node root)
     {
         if(root!=null)
