@@ -1,13 +1,14 @@
 package bank;
+import searchStructures.Item;
 import searchStructures.MyHashMap;
 
 import java.util.*;
 
-class Bank3
+class Bank3 implements BankInterface<MyHashMap>
 {
     public String name;
     public MyHashMap<Integer,Account> accounts;
-    private static int length = 100;
+    private static int length = 10000;
     public Bank3(String name)
     {
         this.name=name;
@@ -32,9 +33,10 @@ class Bank3
 
     public void printAccounts()
     {
-        for (Account acc:accounts.values())
+        List<Item<Integer, Account>> accountToList = accounts.convertToList();
+        for (Item<Integer, Account> item:accountToList)
         {
-            acc.print();
+            item.data.print();
         }
     }
 
@@ -42,14 +44,14 @@ class Bank3
     public MyHashMap<String,Double> getTotalBalancePerCity()
     {
         MyHashMap<String, Double> totalBalances = new MyHashMap<>(length);
-        Collection<Account> accountsValues = accounts.values();
-        for (Account acc: accountsValues){
-            String city = acc.getCity();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            String city = item.data.getCity();
             Double val = totalBalances.search(city);
             if(val == null){
-                totalBalances.insert(city, acc.getBalance());
+                totalBalances.insert(city, item.data.getBalance());
             }else{
-                totalBalances.insert(city, val + acc.getBalance());
+                totalBalances.insert(city, val + item.data.getBalance());
             }
         }
         return totalBalances;
@@ -58,9 +60,9 @@ class Bank3
     public MyHashMap<String,Integer> getTotalCountPerCity()
     {
         MyHashMap<String, Integer> totalCounts = new MyHashMap<>(length);
-        Collection<Account> accountsValues =  accounts.values();
-        for (Account acc: accountsValues){
-            String city = acc.getCity();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            String city = item.data.getCity();
             Integer val = totalCounts.search(city);
             if(val == null){
                 totalCounts.insert(city, 1);
@@ -75,9 +77,10 @@ class Bank3
     {
         System.out.println();
         System.out.println("\n City \t \t Total Balance \t \t Average Balance");
-        Collection<String> balancesKeys = balances.keys();
-        for (String city: balancesKeys)
+        List<Item<String, Double>> balancesToList = balances.convertToList();
+        for (Item<String, Double> item: balancesToList)
         {
+            String city = item.key;
             System.out.println(city+"\t \t "+balances.search(city)+" \t \t "+balances.search(city)/(double)counts.search(city));
         }
     }
@@ -85,9 +88,9 @@ class Bank3
     public MyHashMap<Integer,Integer> getTotalCountPerRange( ArrayList<Integer> ranges)
     {
         MyHashMap<Integer, Integer> totalCountsPerRange = new MyHashMap<>(length);
-        Collection<Account> accountsValues =  accounts.values();
-        for (Account acc: accountsValues){
-            double balance = acc.getBalance();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            double balance = item.data.getBalance();
             for (int i = 0; i < ranges.size()-1; i++) {
                 Integer min = ranges.get(i);
                 Integer max = ranges.get(i+1);
@@ -113,7 +116,12 @@ class Bank3
             System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
         }
         System.out.println();
-
     }
 
+    @Override
+    public String toString() {
+        return "Bank3{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

@@ -8,7 +8,7 @@ package bank;
 
 import java.util.*;
 
-public class Bank
+public class Bank implements BankInterface<ArrayList>
 {
     private String name;
     private ArrayList<Account>accounts;
@@ -77,8 +77,12 @@ public class Bank
         }
         return cities;
     }
-	
-    public ArrayList<Double> getTotalBalancePerCity(ArrayList<String> cities)      
+
+    public ArrayList<Double> getTotalBalancePerCity(){
+        return getTotalBalancePerCity(populateDistinctCityList());
+    }
+
+    private ArrayList<Double> getTotalBalancePerCity(ArrayList<String> cities)
     {
         ArrayList<Double> balances = new ArrayList<>();
         for (String city: cities) {
@@ -92,8 +96,12 @@ public class Bank
         }
         return balances;
     }
-    
-    public ArrayList<Integer> getTotalCountPerCity(ArrayList<String> cities)        
+
+    public ArrayList<Integer> getTotalCountPerCity(){
+        return getTotalCountPerCity(populateDistinctCityList());
+    }
+
+    private ArrayList<Integer> getTotalCountPerCity(ArrayList<String> cities)
     {
         ArrayList<Integer> counts = new ArrayList<>();
         for (String city: cities) {
@@ -137,6 +145,13 @@ public class Bank
             System.out.println("Number of accounts between "+ranges.get(i)+" and "+ranges.get(i+1)+" = "+counts.get(i) );
         }
         System.out.println();   
-    }	
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 

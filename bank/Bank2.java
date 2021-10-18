@@ -13,7 +13,7 @@ package bank;
  
 import java.util.*;
 
-class Bank2 
+class Bank2 implements BankInterface<HashMap>
 {
     public String name;
 	public HashMap<Integer,Account>accounts;
@@ -119,8 +119,13 @@ class Bank2
             System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
         }
         System.out.println();
-
     }
-   
+
+    @Override
+    public String toString() {
+        return "Bank2{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
  

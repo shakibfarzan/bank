@@ -1,11 +1,12 @@
 package bank;
 
 import searchStructures.BinarySearchTree;
+import searchStructures.Item;
 import searchStructures.MyHashMap;
 
 import java.util.*;
 
-public class Bank4
+public class Bank4 implements BankInterface<BinarySearchTree>
 {
     private String name;
     private BinarySearchTree<Integer, Account> accounts;
@@ -39,18 +40,9 @@ public class Bank4
     public double calcTotalBalance()
     {
         double total = 0;
-        Stack<BinarySearchTree.Node> stack = new Stack<>();
-        stack.push(accounts.root);
-        while(!stack.isEmpty()){
-            var current = stack.pop();
-            Account acc = (Account) current.getItem().data;
-            total += acc.getBalance();
-            if (current.getLeft() != null){
-                stack.push(current.getLeft());
-            }
-            if (current.getRight() != null){
-                stack.push(current.getRight());
-            }
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            total+=item.data.getBalance();
         }
         return total;
     }
@@ -59,23 +51,14 @@ public class Bank4
     public BinarySearchTree<String, Double> getTotalBalancePerCity()
     {
         BinarySearchTree<String,Double> totalBalances = new BinarySearchTree<>();
-        Stack<BinarySearchTree.Node> stack = new Stack<>();
-        stack.push(accounts.root);
-        while (!stack.isEmpty()){
-            var current = stack.pop();
-            Account acc = (Account) current.getItem().data;
-            String city = acc.getCity();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            String city = item.data.getCity();
             Double bal = totalBalances.search(city);
             if (bal == null){
-                totalBalances.insert(city, acc.getBalance());
+                totalBalances.insert(city, item.data.getBalance());
             }else{
-                totalBalances.insert(city, bal + acc.getBalance());
-            }
-            if (current.getLeft() != null){
-                stack.push(current.getLeft());
-            }
-            if (current.getRight() != null){
-                stack.push(current.getRight());
+                totalBalances.insert(city, bal + item.data.getBalance());
             }
         }
         return totalBalances;
@@ -84,23 +67,14 @@ public class Bank4
     public BinarySearchTree<String,Integer> getTotalCountPerCity()
     {
         BinarySearchTree<String,Integer> counts = new BinarySearchTree<>();
-        Stack<BinarySearchTree.Node> stack = new Stack<>();
-        stack.push(accounts.root);
-        while (!stack.isEmpty()){
-            var current = stack.pop();
-            Account acc = (Account) current.getItem().data;
-            String city = acc.getCity();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            String city = item.data.getCity();
             Integer count = counts.search(city);
             if (count == null){
                 counts.insert(city, 1);
             }else{
                 counts.insert(city, count + 1);
-            }
-            if (current.getLeft() != null){
-                stack.push(current.getLeft());
-            }
-            if (current.getRight() != null){
-                stack.push(current.getRight());
             }
         }
         return counts;
@@ -108,31 +82,21 @@ public class Bank4
     public void  reportCity(BinarySearchTree<String,Double> balances, BinarySearchTree<String,Integer> counts) {
         System.out.println();
         System.out.println("\n City \t \t Total Balance \t \t Average Balance");
-        Stack<BinarySearchTree.Node> stack = new Stack<>();
-        stack.push(balances.root);
-        while (!stack.isEmpty()) {
-            var current = stack.pop();
-            String city = (String) current.getItem().key;
-            Double balance = (Double) current.getItem().data;
+        List<Item<String, Double>> balancesToList = balances.convertToList();
+        for (Item<String, Double> item: balancesToList){
+            String city = item.key;
+            Double balance = item.data;
             System.out.println(city + "\t \t " + balance + " \t \t " + balance / (double) counts.search(city));
-            if (current.getLeft() != null) {
-                stack.push(current.getLeft());
-            }
-            if (current.getRight() != null) {
-                stack.push(current.getRight());
-            }
         }
+
     }
 
     public BinarySearchTree<Integer,Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
     {
         BinarySearchTree<Integer,Integer> totalCountsPerRange = new BinarySearchTree<>();
-        Stack<BinarySearchTree.Node> stack = new Stack<>();
-        stack.push(accounts.root);
-        while (!stack.isEmpty()){
-            var current = stack.pop();
-            Account acc = (Account) current.getItem().data;
-            double balance = acc.getBalance();
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> item: accountsToList){
+            double balance = item.data.getBalance();
             for (int i = 0; i < ranges.size()-1; i++) {
                 Integer min = ranges.get(i);
                 Integer max = ranges.get(i+1);
@@ -145,15 +109,10 @@ public class Bank4
                     }
                 }
             }
-            if (current.getLeft() != null){
-                stack.push(current.getLeft());
-            }
-            if (current.getRight() != null){
-                stack.push(current.getRight());
-            }
         }
         return totalCountsPerRange;
     }
+
     public void reportRanges(ArrayList<Integer> ranges, BinarySearchTree<Integer,Integer> countsPerRange)
     {
         System.out.println();
@@ -164,5 +123,12 @@ public class Bank4
             System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
         }
         System.out.println();
+    }
+
+    @Override
+    public String toString() {
+        return "Bank4{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
