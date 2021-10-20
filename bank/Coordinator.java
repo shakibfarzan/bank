@@ -1,11 +1,29 @@
 package bank;
+import SortAlgorithms.QuickSort;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class Coordinator {
+    private String[] randomString (int n, int chars){
+        String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        Random rand = new Random();
+        String[] words = new String[n];
+        for (int i = 0; i < n; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < chars; j++) {
+                int index = rand.nextInt(str.length());
+                sb.append(str.charAt(index));
+            }
+            words[i] = sb.toString();
+        }
+        return words;
+    }
     private int[] generateIds(int n, int min, int max) {
         int[] array = new int[n];
         for (int i = 0; i < n; i++) {
@@ -16,7 +34,7 @@ public class Coordinator {
 
     private String[] generateCities(int n){
         Random rand = new Random();
-        String[] cities = {"Sari", "Shiraz", "Tehran", "Kerman", "Tabriz", "Zahedan", "Arak", "Yazd", "Isfahan", "Hamedan","Mashhad", "Abadan"};
+        String[] cities = randomString(n, 5);
         String[] array = new String[n];
         for (int i = 0; i < n; i++) {
             array[i] = cities[rand.nextInt(cities.length)];
@@ -32,6 +50,18 @@ public class Coordinator {
         return array;
     }
 
+    public ArrayList<Integer> generateRanges(int n, int min, int max){
+        Integer[] array = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            array[i] = (int) (Math.random() * (double) (max - min) + min);
+        }
+        QuickSort<Integer> quickSort = new QuickSort<>();
+        quickSort.sort(array);
+        array[0] = min;
+        array[array.length-1] = max;
+        return new ArrayList<>(Arrays.asList(array).subList(0, n));
+    }
+
     private long getTime() {
         return System.nanoTime();
     }
@@ -42,12 +72,12 @@ public class Coordinator {
         {
             for (int rep = 0; rep < maxRep; rep++) {
                 System.out.println("Testing n= " + num);
-                Bank bank1 = new Bank("Bank 1");
+                Bank1 bank1 = new Bank1("Bank 1");
                 Bank2 bank2 = new Bank2("Bank 2");
                 Bank3 bank3 = new Bank3("Bank 3");
                 Bank4 bank4 = new Bank4("Bank 4");
 
-                ArrayList<BankInterface> banks = new ArrayList<>();
+                ArrayList<Bank> banks = new ArrayList<>();
                 banks.add(bank1);
                 banks.add(bank2);
                 banks.add(bank3);
@@ -58,8 +88,8 @@ public class Coordinator {
                 Account[] vals = new Account[num];
                 String[] cities = generateCities(num);
                 double[] balances = generateBalances(num, 1, 10000000);
-
-                for (BankInterface bank : banks) {
+                ArrayList<Integer> ranges = generateRanges(10,0,10000000);
+                for (Bank bank : banks) {
                     long begin = getTime();
                     for (int i = 0; i < num; i++) {
                         Account acc = new Account(ids[i],"A",balances[i],cities[i]);
@@ -93,12 +123,21 @@ public class Coordinator {
                     finish = getTime();
                     writer.write((finish - begin) / num + ",");
 
-//                    begin = getTime();
-//                    for (int i = 0; i < num; i++) {
-//                        bank.getTotalCountPerRange();
-//                    }
-//                    finish = getTime();
-//                    writer.write((finish - begin) / num + ",");
+                    begin = getTime();
+                    for (int i = 0; i < num; i++) {
+                        bank.getTotalCountPerRange(ranges);
+                    }
+                    finish = getTime();
+                    writer.write((finish - begin) / num + ",");
+
+                    //get sorted accounts
+                    Account[] sortedAccounts = bank.sortAccounts();
+                    begin = getTime();
+                    for (int i = 0; i < num; i++) {
+                        bank.getTotalCountPerRangeUsingSort(ranges, sortedAccounts);
+                    }
+                    finish = getTime();
+                    writer.write((finish - begin) / num + ",");
                 }
                 writer.write("\n");
             }

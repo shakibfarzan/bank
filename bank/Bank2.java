@@ -11,9 +11,11 @@ package bank;
  * @author hooman
  */
  
+import SortAlgorithms.QuickSort;
+
 import java.util.*;
 
-class Bank2 implements BankInterface<HashMap>
+class Bank2 implements Bank<HashMap>
 {
     public String name;
 	public HashMap<Integer,Account>accounts;
@@ -79,7 +81,7 @@ class Bank2 implements BankInterface<HashMap>
         return totalCounts;
     }
     
-    public void  reportCity(HashMap<String,Double> balances,HashMap<String,Integer> counts)
+    public void reportCity(HashMap<String,Double> balances,HashMap<String,Integer> counts)
     {
         System.out.println();
 		System.out.println("\n City \t \t Total Balance \t \t Average Balance");
@@ -89,34 +91,75 @@ class Bank2 implements BankInterface<HashMap>
         }
     }
 	
-    public HashMap<Integer,Integer> getTotalCountPerRange( ArrayList<Integer> ranges)
+    public ArrayList<Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
     {
-        HashMap<Integer, Integer> totalCountsPerRange = new HashMap<>();
-        for (Account acc: accounts.values()){
-            double balance = acc.getBalance();
-            for (int i = 0; i < ranges.size()-1; i++) {
-                Integer min = ranges.get(i);
-                Integer max = ranges.get(i+1);
-                if (balance >= min && balance < max){
-                    Integer val = totalCountsPerRange.get(max);
-                    if (val == null){
-                        totalCountsPerRange.put(max, 1);
-                    }else{
-                        totalCountsPerRange.put(max, ++val);
-                    }
+        ArrayList<Integer> counts = new ArrayList<>();
+        for (int i = 0; i < ranges.size()-1; i++) {
+            int counter = 0;
+            for (Account acc: accounts.values()){
+                if(acc.getBalance() >= ranges.get(i) && acc.getBalance() < ranges.get(i+1)){
+                    counter++;
                 }
             }
+            counts.add(counter);
         }
-        return totalCountsPerRange;
+        return counts;
     }
-    public void reportRanges( ArrayList<Integer> ranges,HashMap<Integer,Integer> countsPerRange)
+
+    @Override
+    public ArrayList<Integer> getTotalCountPerRangeUsingSort(ArrayList<Integer> ranges, Account[] sortedAccounts) {
+        int left = 0, right = sortedAccounts.length-1;
+        int minIndex = 0;
+        int maxIndex = 0;
+        ArrayList<Integer> totalCounts = new ArrayList<>();
+        for (int i = 0; i < ranges.size()-1; i++) {
+            double min = ranges.get(i);
+            double max = ranges.get(i+1);
+            //Using binary search
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                if ((sortedAccounts[mid].getBalance() >= min && mid==sortedAccounts.length-1)||(sortedAccounts[mid].getBalance() <= max && sortedAccounts[mid+1].getBalance()> max)) {
+                    maxIndex = mid;
+                    break;
+                }
+                else if (sortedAccounts[mid].getBalance() > max) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            }
+            int count = maxIndex-minIndex+1;
+            minIndex = maxIndex + 1;
+            right = sortedAccounts.length-1;
+            left = minIndex;
+            totalCounts.add(count);
+        }
+        return totalCounts;
+    }
+
+    @Override
+    public Account[] sortAccounts() {
+        Account[] accountsArray = new Account[accounts.size()];
+        // Copy accounts to array
+        int i = 0;
+        for (Account acc: accounts.values()){
+            accountsArray[i] = acc;
+            i++;
+        }
+        // Sort accounts using quick sort
+        QuickSort<Account> quickSort = new QuickSort<>();
+        quickSort.sort(accountsArray);
+        return accountsArray;
+    }
+
+    public void reportRanges(ArrayList<Integer> ranges, ArrayList<Integer> counts)
     {
         System.out.println();
         for (int i=0;i<ranges.size()-1;i++)
         {
-            Integer max = ranges.get(i+1);
-            Integer count = countsPerRange.get(max);
-            System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
+            System.out.println("Number of accounts between "+ranges.get(i)+" and "+ranges.get(i+1)+" = "+counts.get(i) );
         }
         System.out.println();
     }

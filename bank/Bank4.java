@@ -1,12 +1,12 @@
 package bank;
 
-import searchStructures.BinarySearchTree;
-import searchStructures.Item;
-import searchStructures.MyHashMap;
+import SearchStructures.BinarySearchTree;
+import SearchStructures.Item;
+import SortAlgorithms.QuickSort;
 
 import java.util.*;
 
-public class Bank4 implements BankInterface<BinarySearchTree>
+public class Bank4 implements Bank<BinarySearchTree>
 {
     private String name;
     private BinarySearchTree<Integer, Account> accounts;
@@ -91,36 +91,77 @@ public class Bank4 implements BankInterface<BinarySearchTree>
 
     }
 
-    public BinarySearchTree<Integer,Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
+    public ArrayList<Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
     {
-        BinarySearchTree<Integer,Integer> totalCountsPerRange = new BinarySearchTree<>();
+        ArrayList<Integer> counts = new ArrayList<>();
         List<Item<Integer, Account>> accountsToList = accounts.convertToList();
-        for (Item<Integer, Account> item: accountsToList){
-            double balance = item.data.getBalance();
-            for (int i = 0; i < ranges.size()-1; i++) {
-                Integer min = ranges.get(i);
-                Integer max = ranges.get(i+1);
-                if (balance >= min && balance < max){
-                    Integer val = totalCountsPerRange.search(max);
-                    if (val == null){
-                        totalCountsPerRange.insert(max, 1);
-                    }else{
-                        totalCountsPerRange.insert(max, ++val);
-                    }
+        for (int i = 0; i < ranges.size()-1; i++) {
+            int counter = 0;
+            for (Item<Integer, Account> item: accountsToList){
+                if(item.data.getBalance() >= ranges.get(i) && item.data.getBalance() < ranges.get(i+1)){
+                    counter++;
                 }
             }
+            counts.add(counter);
         }
-        return totalCountsPerRange;
+        return counts;
     }
 
-    public void reportRanges(ArrayList<Integer> ranges, BinarySearchTree<Integer,Integer> countsPerRange)
+    @Override
+    public ArrayList<Integer> getTotalCountPerRangeUsingSort(ArrayList<Integer> ranges, Account[] sortedAccounts) {
+        int left = 0, right = sortedAccounts.length-1;
+        int minIndex = 0;
+        int maxIndex = 0;
+        ArrayList<Integer> totalCounts = new ArrayList<>();
+        for (int i = 0; i < ranges.size()-1; i++) {
+            double min = ranges.get(i);
+            double max = ranges.get(i+1);
+            //Using binary search
+            while (left <= right)
+            {
+                int mid = (left + right) / 2;
+                if ((sortedAccounts[mid].getBalance() >= min && mid==sortedAccounts.length-1)||(sortedAccounts[mid].getBalance() <= max && sortedAccounts[mid+1].getBalance()> max)) {
+                    maxIndex = mid;
+                    break;
+                }
+                else if (sortedAccounts[mid].getBalance() > max) {
+                    right = mid - 1;
+                }
+                else {
+                    left = mid + 1;
+                }
+            }
+            int count = maxIndex-minIndex+1;
+            minIndex = maxIndex + 1;
+            right = sortedAccounts.length-1;
+            left = minIndex;
+            totalCounts.add(count);
+        }
+        return totalCounts;
+    }
+
+    @Override
+    public Account[] sortAccounts() {
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        Account[] accountsArray = new Account[accountsToList.size()];
+        // Copy accounts to array
+        int i = 0;
+        for (Item<Integer, Account> item: accountsToList){
+            accountsArray[i] = item.data;
+            i++;
+        }
+        // Sort accounts using quick sort
+        QuickSort<Account> quickSort = new QuickSort<>();
+        quickSort.sort(accountsArray);
+        return accountsArray;
+    }
+
+    public void reportRanges(ArrayList<Integer> ranges, ArrayList<Integer> counts)
     {
         System.out.println();
         for (int i=0;i<ranges.size()-1;i++)
         {
-            Integer max = ranges.get(i+1);
-            Integer count = countsPerRange.search(max);
-            System.out.println("Number of accounts between "+ranges.get(i)+" and "+max+" = "+(count==null?0:count));
+            System.out.println("Number of accounts between "+ranges.get(i)+" and "+ranges.get(i+1)+" = "+counts.get(i) );
         }
         System.out.println();
     }

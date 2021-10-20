@@ -1,4 +1,4 @@
-package searchStructures;
+package SearchStructures;
 
 import java.util.*;
 

@@ -82,6 +82,6 @@ class Account implements Comparable<Account>
 
     @Override
     public int compareTo(Account o) {
-        return Integer.compare(this.id, o.id);
+        return Double.compare(this.balance, o.balance);
     }
 }

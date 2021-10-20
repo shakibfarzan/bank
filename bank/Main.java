@@ -1,9 +1,6 @@
 package bank;
 
-import searchStructures.BinarySearchTree;
-import searchStructures.Item;
-import searchStructures.MyHashMap;
-import searchStructures.MyLinkedList;
+import SortAlgorithms.QuickSort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +22,42 @@ public class Main {
 //        bst.insert("c", 3);
 //        bst.insert("d",4);
 //        bst.insert("e", 5);
-        Random rand = new Random();
-        String[] cities = {"Sari", "Shiraz", "Tehran", "Kerman", "Tabriz", "Zahedan", "Arak", "Yazd", "Isfahan", "Hamedan","Mashhad", "Abadan"};
-        String[] array = new String[10];
-        for (int i = 0; i < 10; i++) {
-            array[i] = cities[rand.nextInt(cities.length)];
-        }
-        System.out.println(Arrays.toString(array));
+//        int[] ranges = {0, 5, 10, 15, 20, 25, 50};
+//        QuickSort<Double> sort = new QuickSort<>();
+//        Double[] arr = {2.12,4.1,1.12,24.24,13.0,45.134,9.1424,1.2134,12.124,25.124};
+//        sort.sort(arr);
+//        System.out.println(Arrays.toString(arr));
+//        int left = 0, right = arr.length-1;
+//        int minIndex = 0;
+//        int maxIndex = 0;
+//        ArrayList<Integer> counts = new ArrayList<>();
+//        for (int i = 0; i < ranges.length - 1; i++) {
+//            double min = ranges[i];
+//            double max = ranges[i+1];
+//            while (left <= right)
+//            {
+//                int mid = (left + right) / 2;
+//
+//                if ((arr[mid] >= min && mid==arr.length-1)||(arr[mid] <= max && arr[mid+1]> max)) {
+//                    maxIndex = mid;
+//                    break;
+//                }
+//                else if (arr[mid] > max) {
+//                    right = mid - 1;
+//                }
+//                else {
+//                    left = mid + 1;
+//                }
+//            }
+//            int count = maxIndex-minIndex+1;
+//            minIndex = maxIndex + 1;
+//            right = arr.length-1;
+//            left = minIndex;
+//            counts.add(count);
+//        }
+//        System.out.println(counts);
+        Coordinator c = new Coordinator();
+        ArrayList<Integer> a = c.generateRanges(100, 0, 1000000);
+        System.out.println(a);
     }
 }
