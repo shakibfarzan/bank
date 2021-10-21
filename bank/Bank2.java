@@ -92,9 +92,10 @@ class Bank2 implements Banks<HashMap>
     public ArrayList<Integer> getTotalCountPerRange(ArrayList<Integer> ranges)
     {
         ArrayList<Integer> counts = new ArrayList<>();
+        Collection<Account> values = accounts.values();
         for (int i = 0; i < ranges.size()-1; i++) {
             int counter = 0;
-            for (Account acc: accounts.values()){
+            for (Account acc: values){
                 if(acc.getBalance() >= ranges.get(i) && acc.getBalance() < ranges.get(i+1)){
                     counter++;
                 }

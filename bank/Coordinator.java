@@ -30,9 +30,9 @@ public class Coordinator {
         return array;
     }
 
-    private String[] generateCities(int n){
+    public String[] generateCities(int n, int distinct){
         Random rand = new Random();
-        String[] cities = randomString(n, 5);
+        String[] cities = randomString(distinct, 5);
         String[] array = new String[n];
         for (int i = 0; i < n; i++) {
             array[i] = cities[rand.nextInt(cities.length)];
@@ -64,9 +64,9 @@ public class Coordinator {
         return System.nanoTime();
     }
 
-    public void experiment(int n, int maxRep) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-        for (int num = 500; num <= n; num += 500) // all  sizes
+    public void experiment(int n, int maxRep, int start, int step) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("outputx.txt"));
+        for (int num = start; num <= n; num += step) // all  sizes
         {
             for (int rep = 0; rep < maxRep; rep++) {
                 System.out.println("Testing n= " + num);
@@ -84,7 +84,7 @@ public class Coordinator {
                 writer.write(num + ",");
                 int[] ids = generateIds(num, 1, 2000000000); //key 1 to max
                 Account[] vals = new Account[num];
-                String[] cities = generateCities(num);
+                String[] cities = generateCities(num, num/100);
                 double[] balances = generateBalances(num, 1, 10000000);
                 ArrayList<Integer> ranges = generateRanges(50,0,10000000);
                 for (Banks bank : banks) {

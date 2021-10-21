@@ -14,7 +14,7 @@ public class Program
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
         Account acc4 = new Account (4,"Robert", 8000,"Tehran");
-        Account acc5 = new Account (5,"A", 100000,"Tehran");
+        Account acc5 = new Account (5,"A", 100001,"Tehran");
         Account acc6 = new Account (6,"B", 8000,"Sydney");
         Account acc7 = new Account(7,"C",200,"Shiraz");
         Account acc8 = new Account(8,"D",2200,"Shiraz");
@@ -210,7 +210,7 @@ public class Program
 
         Coordinator coordinator = new Coordinator();
         try {
-            coordinator.experiment(5000, 10);
+            coordinator.experiment(5000, 20, 500, 500);
         } catch (IOException e) {
             e.printStackTrace();
         }
