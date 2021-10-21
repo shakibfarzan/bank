@@ -1,4 +1,8 @@
-package SearchStructures;
+package bank;
+
+import bank.JavaHashMap;
+import bank.MyHashMap;
+import bank.SearchStructure;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

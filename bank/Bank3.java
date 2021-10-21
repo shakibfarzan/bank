@@ -1,11 +1,8 @@
 package bank;
-import SearchStructures.Item;
-import SearchStructures.MyHashMap;
-import SortAlgorithms.QuickSort;
 
 import java.util.*;
 
-class Bank3 implements Bank<MyHashMap>
+class Bank3 implements Banks<MyHashMap>
 {
     public String name;
     public MyHashMap<Integer,Account> accounts;
@@ -19,12 +16,12 @@ class Bank3 implements Bank<MyHashMap>
 
     public Account findAccount(int id) // find the account for the given id. Returns null if not found
     {
-        return accounts.search(id);
+        return accounts.get(id);
     }
 
     public boolean addAccount(Account account)
     {
-        if (accounts.search(account.getID())!=null){
+        if (accounts.get(account.getID())!=null){
             return false;
         }else{
             accounts.insert(account.getID(), account);
@@ -48,7 +45,7 @@ class Bank3 implements Bank<MyHashMap>
         List<Item<Integer, Account>> accountsToList = accounts.convertToList();
         for (Item<Integer, Account> item: accountsToList){
             String city = item.data.getCity();
-            Double val = totalBalances.search(city);
+            Double val = totalBalances.get(city);
             if(val == null){
                 totalBalances.insert(city, item.data.getBalance());
             }else{
@@ -64,7 +61,7 @@ class Bank3 implements Bank<MyHashMap>
         List<Item<Integer, Account>> accountsToList = accounts.convertToList();
         for (Item<Integer, Account> item: accountsToList){
             String city = item.data.getCity();
-            Integer val = totalCounts.search(city);
+            Integer val = totalCounts.get(city);
             if(val == null){
                 totalCounts.insert(city, 1);
             }else{
@@ -74,15 +71,17 @@ class Bank3 implements Bank<MyHashMap>
         return totalCounts;
     }
 
-    public void  reportCity(MyHashMap<String,Double> balances,MyHashMap<String,Integer> counts)
+    public void  reportCity(ArrayList<String> cities,MyHashMap<String,Double> balances,MyHashMap<String,Integer> counts)
     {
         System.out.println();
         System.out.println("\n City \t \t Total Balance \t \t Average Balance");
         List<Item<String, Double>> balancesToList = balances.convertToList();
+        int i = 0;
         for (Item<String, Double> item: balancesToList)
         {
-            String city = item.key;
-            System.out.println(city+"\t \t "+balances.search(city)+" \t \t "+balances.search(city)/(double)counts.search(city));
+            String city = cities.get(i);
+            System.out.println(city+"\t \t "+balances.get(city)+" \t \t "+balances.get(city)/(double)counts.get(city));
+            i++;
         }
     }
 
@@ -149,6 +148,17 @@ class Bank3 implements Bank<MyHashMap>
         QuickSort<Account> quickSort = new QuickSort<>();
         quickSort.sort(accountsArray);
         return accountsArray;
+    }
+
+    @Override
+    public double calcTotalBalance() {
+        double total = 0;
+        List<Item<Integer, Account>> accountsToList = accounts.convertToList();
+        for (Item<Integer, Account> acc : accountsToList)
+        {
+            total += acc.data.getBalance();
+        }
+        return total;
     }
 
 

@@ -11,11 +11,9 @@ package bank;
  * @author hooman
  */
  
-import SortAlgorithms.QuickSort;
-
 import java.util.*;
 
-class Bank2 implements Bank<HashMap>
+class Bank2 implements Banks<HashMap>
 {
     public String name;
 	public HashMap<Integer,Account>accounts;
@@ -152,6 +150,16 @@ class Bank2 implements Bank<HashMap>
         QuickSort<Account> quickSort = new QuickSort<>();
         quickSort.sort(accountsArray);
         return accountsArray;
+    }
+
+    @Override
+    public double calcTotalBalance() {
+        double total = 0;
+        for (Account acc : accounts.values())
+        {
+            total += acc.getBalance();
+        }
+        return total;
     }
 
     public void reportRanges(ArrayList<Integer> ranges, ArrayList<Integer> counts)

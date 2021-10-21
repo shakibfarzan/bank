@@ -1,8 +1,5 @@
 package bank;
 
-import SearchStructures.BinarySearchTree;
-import SearchStructures.MyHashMap;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,14 +14,26 @@ public class Program
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
         Account acc4 = new Account (4,"Robert", 8000,"Tehran");
-	    Bank1 bank1 =new Bank1("Hooman Bank");
+        Account acc5 = new Account (5,"A", 100000,"Tehran");
+        Account acc6 = new Account (6,"B", 8000,"Sydney");
+        Account acc7 = new Account(7,"C",200,"Shiraz");
+        Account acc8 = new Account(8,"D",2200,"Shiraz");
+        Account acc9 = new Account(9,"E",300,"Sydney");
+        Account acc10 = new Account(10, "F",120000,"Shiraz");
+	    Bank bank =new Bank("Hooman Bank");
         
         //adding accounts
-        bank1.addAccount(acc1);
-        bank1.addAccount(acc2);
-        bank1.addAccount(acc3);
-        bank1.addAccount(acc4);
-        if( bank1.addAccount(acc4))
+        bank.addAccount(acc1);
+        bank.addAccount(acc2);
+        bank.addAccount(acc3);
+        bank.addAccount(acc4);
+        bank.addAccount(acc5);
+        bank.addAccount(acc6);
+        bank.addAccount(acc7);
+        bank.addAccount(acc8);
+        bank.addAccount(acc9);
+        bank.addAccount(acc10);
+        if( bank.addAccount(acc4))
         {
                  System.out.println("Account has been created successfully");
         }
@@ -34,7 +43,7 @@ public class Program
         }	
 
         //or better way
-        addAccount(bank1,acc4);
+        addAccount(bank,acc4);
 
       	if (acc1.deposit(-60))
         {
@@ -56,11 +65,11 @@ public class Program
 		
         // or this one which is a better design
         //find an account
-        Account acc= bank1.findAccount(3);
+        Account acc= bank.findAccount(3);
         withdraw(acc,50);
  
-        bank1.printAccounts();
-        double total = bank1.calcTotalBalance();
+        bank.printAccounts();
+        double total = bank.calcTotalBalance();
         System.out.println ("Total balance = " + total);	
 		
         //search accounts
@@ -70,7 +79,7 @@ public class Program
         {
             System.out.print(" Enter an account ID: ( 0 to exit) ");
             id=sc.nextInt();
-            acc= bank1.findAccount(id);
+            acc= bank.findAccount(id);
             if (acc!=null)
                 acc.print();
             else
@@ -84,23 +93,23 @@ public class Program
         //Data aggregation
 
         //Data Aggregation Report: print total and average balance per city
-        ArrayList<String>cities= bank1.populateDistinctCityList();
-        ArrayList<Double>balances= bank1.getTotalBalancePerCity();
-        ArrayList<Integer>counts= bank1.getTotalCountPerCity();
-        bank1.reportCity(cities,counts,balances);
+        ArrayList<String>cities= bank.populateDistinctCityList();
+        ArrayList<Double>balances= bank.getTotalBalancePerCity();
+        ArrayList<Integer>counts= bank.getTotalCountPerCity();
+        bank.reportTotalPerCity(cities,counts,balances);
 
         //Data Aggregation Report: print number of accounts per balance range
         Integer [] r={1,1000,10000,100000,10000000};
         ArrayList<Integer> ranges=new ArrayList<Integer>(Arrays.asList(r));
-        ArrayList<Integer> countsPerRange= bank1.getTotalCountPerRange(ranges);
-        bank1.reportRanges(ranges, countsPerRange);
+        ArrayList<Integer> countsPerRange= bank.getTotalCountPerRange(ranges);
+        bank.reportRanges(ranges, countsPerRange);
 
         System.out.println("Sorted accounts by balance");
-        Account[] sortedAccounts1 = bank1.sortAccounts();
+        Account[] sortedAccounts1 = bank.sortAccounts();
         System.out.println(Arrays.toString(sortedAccounts1));
         System.out.println("Report ranges by sorting");
-        ArrayList<Integer> counts1 = bank1.getTotalCountPerRangeUsingSort(ranges,sortedAccounts1);
-        bank1.reportRanges(ranges,counts1);
+        ArrayList<Integer> counts1 = bank.getTotalCountPerRangeUsingSort(ranges,sortedAccounts1);
+        bank.reportRanges(ranges,counts1);
 
         Bank2 bank2=new Bank2("hooman Better Bank");
 
@@ -109,7 +118,12 @@ public class Program
         bank2.addAccount(acc2);
         bank2.addAccount(acc3);
         bank2.addAccount(acc4);
-		
+        bank2.addAccount(acc5);
+        bank2.addAccount(acc6);
+        bank2.addAccount(acc7);
+        bank2.addAccount(acc8);
+        bank2.addAccount(acc9);
+        bank2.addAccount(acc10);
         //find an account
         Account accn=bank2.findAccount(3);
         withdraw(accn,10);
@@ -135,6 +149,12 @@ public class Program
         bank3.addAccount(acc2);
         bank3.addAccount(acc3);
         bank3.addAccount(acc4);
+        bank3.addAccount(acc5);
+        bank3.addAccount(acc6);
+        bank3.addAccount(acc7);
+        bank3.addAccount(acc8);
+        bank3.addAccount(acc9);
+        bank3.addAccount(acc10);
 
         //find an account
         Account accnt=bank3.findAccount(3);
@@ -143,7 +163,7 @@ public class Program
         //Data aggregation
         MyHashMap<String,Double> cities3=bank3.getTotalBalancePerCity();
         MyHashMap<String,Integer> counts3=bank3.getTotalCountPerCity();
-        bank3.reportCity(cities3,counts3);
+        bank3.reportCity(cities,cities3,counts3);
 
         ArrayList<Integer> countsPerRange2=bank3.getTotalCountPerRange(ranges);
         bank3.reportRanges(ranges,countsPerRange2);
@@ -162,6 +182,12 @@ public class Program
         bank4.addAccount(acc2);
         bank4.addAccount(acc3);
         bank4.addAccount(acc4);
+        bank4.addAccount(acc5);
+        bank4.addAccount(acc6);
+        bank4.addAccount(acc7);
+        bank4.addAccount(acc8);
+        bank4.addAccount(acc9);
+        bank4.addAccount(acc10);
 
         //find an account
         Account accnt1=bank4.findAccount(3);
@@ -170,7 +196,7 @@ public class Program
         //Data aggregation
         BinarySearchTree<String,Double> cities4=bank4.getTotalBalancePerCity();
         BinarySearchTree<String,Integer> counts4=bank4.getTotalCountPerCity();
-        bank4.reportCity(cities4,counts4);
+        bank4.reportCity(cities,cities4,counts4);
 
         ArrayList<Integer> countsPerRange3=bank4.getTotalCountPerRange(ranges);
         bank4.reportRanges(ranges,countsPerRange3);
@@ -184,7 +210,7 @@ public class Program
 
         Coordinator coordinator = new Coordinator();
         try {
-            coordinator.experiment(1000, 50);
+            coordinator.experiment(5000, 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -201,9 +227,9 @@ public class Program
             System.out.println(" withdraw was not succesful");
         }
     }
-    public static void addAccount(Bank1 bank1, Account acc) // UI method
+    public static void addAccount(Bank bank, Account acc) // UI method
     {
-        if( bank1.addAccount(acc))
+        if( bank.addAccount(acc))
         {
                  System.out.println("Account has been created successfully");
         }

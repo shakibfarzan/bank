@@ -1,8 +1,12 @@
-package SearchStructures;
+package bank;
+
+import bank.Item;
+import bank.MyLinkedList;
+import bank.SearchStructure;
 
 import java.util.*;
 
-public class MyHashMap<K, V> extends SearchStructure<K, V>{
+public class MyHashMap<K, V> extends SearchStructure<K,V>{
     private MyLinkedList<K, V>[] hashtable;
     private int length;
 
@@ -24,7 +28,6 @@ public class MyHashMap<K, V> extends SearchStructure<K, V>{
 
 
 
-    @Override
     public boolean insert(K key, V data) {
         int index = hashFunction(key);
         if (hashtable[index] == null) {
@@ -33,7 +36,6 @@ public class MyHashMap<K, V> extends SearchStructure<K, V>{
         return hashtable[index].insert(key, data);
     }
 
-    @Override
     public boolean delete(K key) {
         int index = hashFunction(key);
         return hashtable[index].delete(key);
@@ -41,6 +43,11 @@ public class MyHashMap<K, V> extends SearchStructure<K, V>{
 
     @Override
     public V search(K key) {
+        int index = hashFunction(key);
+        return (hashtable[index]==null)?null:hashtable[index].search(key);
+    }
+
+    public V get(K key) {
         int index = hashFunction(key);
         return (hashtable[index]==null)?null:hashtable[index].search(key);
     }

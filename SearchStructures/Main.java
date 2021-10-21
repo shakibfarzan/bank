@@ -1,5 +1,7 @@
 package SearchStructures;
 
+import bank.Coordinator2;
+
 import java.io.IOException;
 
 public class Main {

@@ -1,12 +1,8 @@
 package bank;
 
-import SearchStructures.BinarySearchTree;
-import SearchStructures.Item;
-import SortAlgorithms.QuickSort;
-
 import java.util.*;
 
-public class Bank4 implements Bank<BinarySearchTree>
+public class Bank4 implements Banks<BinarySearchTree>
 {
     private String name;
     private BinarySearchTree<Integer, Account> accounts;
@@ -79,14 +75,16 @@ public class Bank4 implements Bank<BinarySearchTree>
         }
         return counts;
     }
-    public void  reportCity(BinarySearchTree<String,Double> balances, BinarySearchTree<String,Integer> counts) {
+    public void  reportCity(ArrayList<String> cities, BinarySearchTree<String,Double> balances, BinarySearchTree<String,Integer> counts) {
         System.out.println();
         System.out.println("\n City \t \t Total Balance \t \t Average Balance");
         List<Item<String, Double>> balancesToList = balances.convertToList();
+        int i = 0;
         for (Item<String, Double> item: balancesToList){
-            String city = item.key;
+            String city = cities.get(i);
             Double balance = item.data;
             System.out.println(city + "\t \t " + balance + " \t \t " + balance / (double) counts.search(city));
+            i++;
         }
 
     }

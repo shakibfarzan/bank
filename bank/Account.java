@@ -45,7 +45,15 @@ class Account implements Comparable<Account>
     {
         return balance;
     }
-  
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     boolean withdraw(double amount)
     {
         if (balance>=amount)

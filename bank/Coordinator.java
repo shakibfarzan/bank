@@ -1,12 +1,10 @@
 package bank;
-import SortAlgorithms.QuickSort;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class Coordinator {
@@ -68,16 +66,16 @@ public class Coordinator {
 
     public void experiment(int n, int maxRep) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
-        for (int num = 100; num <= n; num += 50) // all  sizes
+        for (int num = 500; num <= n; num += 500) // all  sizes
         {
             for (int rep = 0; rep < maxRep; rep++) {
                 System.out.println("Testing n= " + num);
-                Bank1 bank1 = new Bank1("Bank 1");
+                Bank bank1 = new Bank("Bank 1");
                 Bank2 bank2 = new Bank2("Bank 2");
                 Bank3 bank3 = new Bank3("Bank 3");
                 Bank4 bank4 = new Bank4("Bank 4");
 
-                ArrayList<Bank> banks = new ArrayList<>();
+                ArrayList<Banks> banks = new ArrayList<>();
                 banks.add(bank1);
                 banks.add(bank2);
                 banks.add(bank3);
@@ -88,8 +86,8 @@ public class Coordinator {
                 Account[] vals = new Account[num];
                 String[] cities = generateCities(num);
                 double[] balances = generateBalances(num, 1, 10000000);
-                ArrayList<Integer> ranges = generateRanges(10,0,10000000);
-                for (Bank bank : banks) {
+                ArrayList<Integer> ranges = generateRanges(50,0,10000000);
+                for (Banks bank : banks) {
                     long begin = getTime();
                     for (int i = 0; i < num; i++) {
                         Account acc = new Account(ids[i],"A",balances[i],cities[i]);
