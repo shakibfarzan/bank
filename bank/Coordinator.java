@@ -65,9 +65,14 @@ public class Coordinator {
     }
 
     public void experiment(int n, int maxRep, int start, int step) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("outputx.txt"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("o1.txt"));
         for (int num = start; num <= n; num += step) // all  sizes
         {
+            int[] ids = generateIds(num, 1, 2000000000); //key 1 to max
+            Account[] vals = new Account[num];
+            String[] cities = generateCities(num, 9);
+            double[] balances = generateBalances(num, 1, 10000000);
+            ArrayList<Integer> ranges = generateRanges(5,0,10000000);
             for (int rep = 0; rep < maxRep; rep++) {
                 System.out.println("Testing n= " + num);
                 Bank bank1 = new Bank("Bank 1");
@@ -82,12 +87,8 @@ public class Coordinator {
                 banks.add(bank4);
 
                 writer.write(num + ",");
-                int[] ids = generateIds(num, 1, 2000000000); //key 1 to max
-                Account[] vals = new Account[num];
-                String[] cities = generateCities(num, num/100);
-                double[] balances = generateBalances(num, 1, 10000000);
-                ArrayList<Integer> ranges = generateRanges(50,0,10000000);
                 for (Banks bank : banks) {
+                    System.out.println(bank + "Add");
                     long begin = getTime();
                     for (int i = 0; i < num; i++) {
                         Account acc = new Account(ids[i],"A",balances[i],cities[i]);
@@ -98,6 +99,7 @@ public class Coordinator {
                     }
                     long finish = getTime();
                     writer.write((finish - begin) / num + ",");
+                    System.out.println(bank + "Find");
                     begin = getTime();
                     for (int i = 0; i < num; i++) {
                         Account temp = bank.findAccount(ids[i]);
@@ -106,21 +108,21 @@ public class Coordinator {
                     }
                     finish = getTime();
                     writer.write((finish - begin) / num + ",");
-
+                    System.out.println(bank + "balance per city");
                     begin = getTime();
                     for (int i = 0; i < num; i++) {
                        bank.getTotalBalancePerCity();
                     }
                     finish = getTime();
                     writer.write((finish - begin) / num + ",");
-
+                    System.out.println(bank + "count per city");
                     begin = getTime();
                     for (int i = 0; i < num; i++) {
                         bank.getTotalCountPerCity();
                     }
                     finish = getTime();
                     writer.write((finish - begin) / num + ",");
-
+                    System.out.println(bank + "count per range");
                     begin = getTime();
                     for (int i = 0; i < num; i++) {
                         bank.getTotalCountPerRange(ranges);
@@ -129,9 +131,10 @@ public class Coordinator {
                     writer.write((finish - begin) / num + ",");
 
                     //get sorted accounts
-                    Account[] sortedAccounts = bank.sortAccounts();
+                    System.out.println(bank + "count per range sort");
                     begin = getTime();
                     for (int i = 0; i < num; i++) {
+                        Account[] sortedAccounts = bank.sortAccounts();
                         bank.getTotalCountPerRangeUsingSort(ranges, sortedAccounts);
                     }
                     finish = getTime();
