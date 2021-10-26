@@ -138,51 +138,67 @@ public class Bank implements Banks<ArrayList>
         return counts;
     }
 
-    @Override
-    public ArrayList<Integer> getTotalCountPerRangeUsingSort(ArrayList<Integer> ranges, Account[] sortedAccounts) {
-        int left = 0, right = sortedAccounts.length-1;
-        int minIndex = 0;
-        int maxIndex = 0;
-        ArrayList<Integer> totalCounts = new ArrayList<>();
-        for (int i = 0; i < ranges.size()-1; i++) {
-            double min = ranges.get(i);
-            double max = ranges.get(i+1);
-            //Using binary search
-            while (left <= right)
-            {
-                int mid = (left + right) / 2;
-                if ((sortedAccounts[mid].getBalance() >= min && mid==sortedAccounts.length-1)||(sortedAccounts[mid].getBalance() <= max && sortedAccounts[mid+1].getBalance()> max)) {
-                    maxIndex = mid;
-                    break;
-                }
-                else if (sortedAccounts[mid].getBalance() > max) {
-                    right = mid - 1;
-                }
-                else {
-                    left = mid + 1;
-                }
-            }
-            int count = maxIndex-minIndex+1;
-            minIndex = maxIndex + 1;
-            right = sortedAccounts.length-1;
-            left = minIndex;
-            totalCounts.add(count);
-        }
-        return totalCounts;
-    }
-
-    @Override
-    public Account[] sortAccounts() {
-        Account[] accountsArray = new Account[accounts.size()];
-        // Copy accounts to array
-        for (int i = 0; i < accounts.size(); i++) {
-            accountsArray[i] = accounts.get(i);
-        }
-        // Sort accounts using quick sort
-        QuickSort<Account> quickSort = new QuickSort<>();
-        quickSort.sort(accountsArray);
-        return accountsArray;
-    }
+//    public ArrayList<Integer> getTotalCountPerRange(ArrayList<Integer> ranges) {
+//        //Sort accounts
+//        Account[] sortedAccounts = Banks.convertListToArrayAccount(accounts);
+////        QuickSort<Account> quickSort = new QuickSort<>();
+////        quickSort.sort(sortedAccounts);
+////        MergeSort<Account> mergeSort = new MergeSort<>();
+////        mergeSort.sort(sortedAccounts);
+//        HeapSort<Account> heapSort = new HeapSort<>();
+//        heapSort.sort(sortedAccounts);
+//        int left = 0, leftFirst = 0, right = sortedAccounts.length-1;
+//        double minimumRanges = ranges.get(0);
+//        if (minimumRanges!=0){
+//            while (leftFirst <= right)
+//            {
+//                int mid = (leftFirst + right) / 2;
+//                double balance = sortedAccounts[mid].getBalance();
+//                if ((balance >= minimumRanges && mid==0)||(balance >= minimumRanges && sortedAccounts[mid-1].getBalance()< minimumRanges)) {
+//                    left = mid;
+//                    break;
+//                }
+//                else if (balance > minimumRanges) {
+//                    right = mid - 1;
+//                }
+//                else {
+//                    leftFirst = mid + 1;
+//                }
+//            }
+//        }
+//        int minIndex = left;
+//        int maxIndex = 0;
+//        right = sortedAccounts.length-1;
+//        ArrayList<Integer> totalCounts = new ArrayList<>();
+//        for (int i = 0; i < ranges.size()-1; i++) {
+//            double max = ranges.get(i+1);
+//            //Using binary search
+//            boolean has = false;
+//            while (left <= right)
+//            {
+//                int mid = (left + right) / 2;
+//                double balance = sortedAccounts[mid].getBalance();
+//                if ((balance < max && mid==sortedAccounts.length-1)
+//                        ||(balance < max && sortedAccounts[mid+1].getBalance()>= max)) {
+//                    maxIndex = mid;
+//                    has = true;
+//                    break;
+//                }
+//                else if (balance >= max) {
+//                    right = mid - 1;
+//                }
+//                else {
+//                    left = mid + 1;
+//                }
+//            }
+//            int count = has ? maxIndex-minIndex+1:0;
+//            minIndex = has ? maxIndex + 1:minIndex;
+//            right = sortedAccounts.length-1;
+//            left = minIndex;
+//            totalCounts.add(count);
+//        }
+//        return totalCounts;
+//    }
 
     public void reportRanges(ArrayList<Integer> ranges, ArrayList<Integer> counts)
     {

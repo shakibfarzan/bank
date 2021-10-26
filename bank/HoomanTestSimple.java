@@ -17,7 +17,28 @@ public class HoomanTestSimple
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
         Account acc4 = new Account (4,"Robert", 8000,"Tehran");
-        
+        Account acc5 = new Account (5,"Robert1", 10000,"Tehran");
+        Account acc6 = new Account (6,"Robert2", 8500,"Tehran");
+        Account acc7 = new Account (7,"Robert3", 9000,"Tehran");
+        Account acc8 = new Account (8,"Robert4", 1000000,"Tehran");
+        Account acc9 = new Account (9,"Robert5", 1000900,"Tehran");
+        Account acc10 = new Account (10,"Robert6", 500,"Tehran");
+        Account acc11 = new Account (11,"Robert7", 1000,"Tehran");
+        Account acc12 = new Account (12,"Robert8", 1100,"Tehran");
+        Account acc13 = new Account (13,"Robert9", 2000,"Tehran");
+        Account acc14 = new Account (14,"Robert10", 5000,"Tehran");
+        Account acc15 = new Account (15,"Robert11", 6000,"Tehran");
+        Account acc16 = new Account (16,"Robert12", 7000,"Tehran");
+        Account acc17 = new Account (17,"Robert13", 1000000,"Tehran");
+        Account acc18 = new Account (18,"Robert14", 9000,"Tehran");
+        Account acc19 = new Account (19,"Kim1",  100,"Sydney");
+        Account acc20 = new Account (20,"Kim2",  0,"Sydney");
+        Account acc21 = new Account (21,"Kim3",  10,"Sydney");
+        Account acc22 = new Account (22,"Kim4",  2000000000,"Sydney");
+        Account acc23 = new Account (23,"Kim5",  10000,"Sydney");
+        Account acc24 = new Account (24,"Kim6",  10000,"Sydney");
+        Account acc25 = new Account (25,"Kim7",  10000,"Sydney");
+
         
         ArrayList<Account>accounts=new ArrayList<>();
         
@@ -25,7 +46,27 @@ public class HoomanTestSimple
         accounts.add(acc2);
         accounts.add(acc3);
         accounts.add(acc4);
- 
+        accounts.add(acc5);
+        accounts.add(acc6);
+        accounts.add(acc7);
+        accounts.add(acc8);
+        accounts.add(acc9);
+        accounts.add(acc10);
+        accounts.add(acc11);
+        accounts.add(acc12);
+        accounts.add(acc13);
+        accounts.add(acc14);
+        accounts.add(acc15);
+        accounts.add(acc16);
+        accounts.add(acc17);
+        accounts.add(acc18);
+        accounts.add(acc19);
+        accounts.add(acc20);
+        accounts.add(acc21);
+        accounts.add(acc22);
+        accounts.add(acc23);
+        accounts.add(acc24);
+        accounts.add(acc25);
         Bank bank=new Bank("Hooman Bank 1");
             
         for(Account ac:accounts)
@@ -50,7 +91,7 @@ public class HoomanTestSimple
         System.out.println("Total balance = "+bank.calcTotalBalance());
 
         //test search (valid accounts)
-        for (int id=1;id<=4;id++)
+        for (int id=1;id<=accounts.size();id++)
         {
             Account ac=bank.findAccount(id);
             if (ac==null||!(ac.getName().equals(accounts.get(id-1).getName()))
@@ -67,7 +108,7 @@ public class HoomanTestSimple
         System.out.println("Total balance after withdraw = "+bank.calcTotalBalance());
             
         //test search (invalid accounts)
-        for (int id=5;id<=1000;id++)
+        for (int id=accounts.size()+1;id<=1000;id++)
         {
             if (bank.findAccount(id)!=null)
             {
@@ -84,7 +125,7 @@ public class HoomanTestSimple
         ArrayList<Integer>counts=bank.getTotalCountPerCity(cities);
 
         //test range aggregation-Count
-        ArrayList<Integer> countsPerRange=bank.getTotalCountPerRange(rangesList);    
+        ArrayList<Integer> countsPerRange=bank.getTotalCountPerRange(rangesList);
 
         bank.reportTotalPerCity(cities, counts, balances);
         bank.reportRanges(rangesList, countsPerRange);	 
@@ -114,7 +155,7 @@ public class HoomanTestSimple
         System.out.println("\n\nTotal balance = "+bank2.calcTotalBalance());
 
         //test search (valid accounts)
-        for (int id=1;id<=4;id++)
+        for (int id=1;id<=accounts.size();id++)
         {
             Account ac=bank2.findAccount(id);
             if (ac==null||!(ac.getName().equals(accounts.get(id-1).getName()))
@@ -131,7 +172,7 @@ public class HoomanTestSimple
         System.out.println("Total balance after withdraw = "+bank2.calcTotalBalance());
         
         //test search (invalid accounts)
-        for (int id=5;id<=1000;id++)
+        for (int id=accounts.size()+1;id<=1000;id++)
         {
             if (bank2.findAccount(id)!=null)
             {
@@ -147,7 +188,7 @@ public class HoomanTestSimple
         HashMap<String,Integer>counts1=bank2.getTotalCountPerCity();
 
         //test range aggregation-Count
-        ArrayList<Integer> countsPerRange1=bank2.getTotalCountPerRange(rangesList); 
+        ArrayList<Integer> countsPerRange1=bank2.getTotalCountPerRange(rangesList);
 
         // test count aggregation
         for( int k=0;k<counts.size();k++)
@@ -207,7 +248,7 @@ public class HoomanTestSimple
         System.out.println("\n\nTotal balance = "+bank3.calcTotalBalance());
 
         //test search (valid accounts)
-        for (int id=1;id<=4;id++)
+        for (int id=1;id<=accounts.size();id++)
         {
             Account ac=bank3.findAccount(id);
             if (ac==null||!(ac.getName().equals(accounts.get(id-1).getName()))
@@ -224,7 +265,7 @@ public class HoomanTestSimple
         System.out.println("Total balance after withdraw = "+bank3.calcTotalBalance());
         
         //test search (invalid accounts)
-        for (int id=5;id<=1000;id++)
+        for (int id=accounts.size()+1;id<=1000;id++)
         {
             if (bank3.findAccount(id)!=null)
             {
@@ -240,7 +281,7 @@ public class HoomanTestSimple
         MyHashMap<String,Integer>counts2=bank3.getTotalCountPerCity();
 
         //test range aggregation-Count
-        ArrayList<Integer> countsPerRange2=bank3.getTotalCountPerRange(rangesList); 
+        ArrayList<Integer> countsPerRange2=bank3.getTotalCountPerRange(rangesList);
 
         // test count aggregation
         for( int k=0;k<counts.size();k++)
@@ -300,7 +341,7 @@ public class HoomanTestSimple
         System.out.println("\n\nTotal balance = "+bank4.calcTotalBalance());
 
         //test search (valid accounts)
-        for (int id=1;id<=4;id++)
+        for (int id=1;id<=accounts.size();id++)
         {
             Account ac=bank4.findAccount(id);
             if (ac==null||!(ac.getName().equals(accounts.get(id-1).getName()))
@@ -317,7 +358,7 @@ public class HoomanTestSimple
         System.out.println("Total balance after withdraw = "+bank4.calcTotalBalance());
         
         //test search (invalid accounts)
-        for (int id=5;id<=1000;id++)
+        for (int id=accounts.size()+1;id<=1000;id++)
         {
             if (bank4.findAccount(id)!=null)
             {
@@ -333,7 +374,7 @@ public class HoomanTestSimple
         BinarySearchTree<String,Integer>counts3=bank4.getTotalCountPerCity();
 
         //test range aggregation-Count
-        ArrayList<Integer> countsPerRange3=bank4.getTotalCountPerRange(rangesList); 
+        ArrayList<Integer> countsPerRange3=bank4.getTotalCountPerRange(rangesList);
 
         // test count aggregation
         for( int k=0;k<counts.size();k++)

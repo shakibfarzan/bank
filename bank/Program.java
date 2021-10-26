@@ -14,7 +14,7 @@ public class Program
         Account acc2 = new Account (2,"Jack", 1800,"Sydney");
         Account acc3 = new Account (3,"Jill", 20000,"Tehran");
         Account acc4 = new Account (4,"Robert", 8000,"Tehran");
-        Account acc5 = new Account (5,"A", 100001,"Tehran");
+        Account acc5 = new Account (5,"A", 100000,"Tehran");
         Account acc6 = new Account (6,"B", 8000,"Sydney");
         Account acc7 = new Account(7,"C",200,"Shiraz");
         Account acc8 = new Account(8,"D",2200,"Shiraz");
@@ -99,17 +99,14 @@ public class Program
         bank.reportTotalPerCity(cities,counts,balances);
 
         //Data Aggregation Report: print number of accounts per balance range
-        Integer [] r={1,1000,10000,100000,10000000};
+        Integer [] r={1000,10000,100000,10000000};
         ArrayList<Integer> ranges=new ArrayList<Integer>(Arrays.asList(r));
         ArrayList<Integer> countsPerRange= bank.getTotalCountPerRange(ranges);
         bank.reportRanges(ranges, countsPerRange);
 
-        System.out.println("Sorted accounts by balance");
-        Account[] sortedAccounts1 = bank.sortAccounts();
-        System.out.println(Arrays.toString(sortedAccounts1));
-        System.out.println("Report ranges by sorting");
-        ArrayList<Integer> counts1 = bank.getTotalCountPerRangeUsingSort(ranges,sortedAccounts1);
-        bank.reportRanges(ranges,counts1);
+//        System.out.println("Report ranges by sorting");
+//        ArrayList<Integer> counts1 = bank.getTotalCountPerRangeSorted(ranges);
+//        bank.reportRanges(ranges,counts1);
 
         Bank2 bank2=new Bank2("hooman Better Bank");
 
@@ -136,12 +133,10 @@ public class Program
         ArrayList<Integer> countsPerRange1=bank2.getTotalCountPerRange(ranges);
         bank2.reportRanges(ranges,countsPerRange1);
 
-        System.out.println("Sorted accounts by balance");
-        Account[] sortedAccounts2 = bank2.sortAccounts();
-        System.out.println(Arrays.toString(sortedAccounts2));
-        System.out.println("Report ranges by sorting");
-        ArrayList<Integer> countsB2 = bank2.getTotalCountPerRangeUsingSort(ranges,sortedAccounts2);
-        bank2.reportRanges(ranges,countsB2);
+
+//        System.out.println("Report ranges by sorting");
+//        ArrayList<Integer> countsB2 = bank2.getTotalCountPerRangeSorted(ranges);
+//        bank2.reportRanges(ranges,countsB2);
 
         Bank3 bank3=new Bank3("bank with MyHashmap");
         //adding accounts
@@ -168,12 +163,9 @@ public class Program
         ArrayList<Integer> countsPerRange2=bank3.getTotalCountPerRange(ranges);
         bank3.reportRanges(ranges,countsPerRange2);
 
-        System.out.println("Sorted accounts by balance");
-        Account[] sortedAccounts3 = bank3.sortAccounts();
-        System.out.println(Arrays.toString(sortedAccounts3));
-        System.out.println("Report ranges by sorting");
-        ArrayList<Integer> countsB3 = bank3.getTotalCountPerRangeUsingSort(ranges,sortedAccounts3);
-        bank3.reportRanges(ranges,countsB3);
+//        System.out.println("Report ranges by sorting");
+//        ArrayList<Integer> countsB3 = bank3.getTotalCountPerRangeSorted(ranges);
+//        bank3.reportRanges(ranges,countsB3);
 
         Bank4 bank4 = new Bank4("bank with BST");
 
@@ -201,16 +193,14 @@ public class Program
         ArrayList<Integer> countsPerRange3=bank4.getTotalCountPerRange(ranges);
         bank4.reportRanges(ranges,countsPerRange3);
 
-        System.out.println("Sorted accounts by balance");
-        Account[] sortedAccounts4 = bank4.sortAccounts();
-        System.out.println(Arrays.toString(sortedAccounts4));
-        System.out.println("Report ranges by sorting");
-        ArrayList<Integer> countsB4 = bank4.getTotalCountPerRangeUsingSort(ranges,sortedAccounts4);
-        bank4.reportRanges(ranges,countsB4);
+
+//        System.out.println("Report ranges by sorting");
+//        ArrayList<Integer> countsB4 = bank4.getTotalCountPerRangeSorted(ranges);
+//        bank4.reportRanges(ranges,countsB4);
 
         Coordinator coordinator = new Coordinator();
         try {
-            coordinator.experiment(5000, 20, 500, 500);
+            coordinator.experiment(20000, 50, 20000, 200);
         } catch (IOException e) {
             e.printStackTrace();
         }
